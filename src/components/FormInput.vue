@@ -1,16 +1,5 @@
 <template>
-  <div class="form-input">
-    <label class="add-good__label add-good__label--required" for="name"
-      >Наименование товара</label
-    >
-    <input
-      class="add-good__input"
-      type="text"
-      name="name"
-      id="name"
-      placeholder="Введите наименование товара"
-    />
-  </div>
+  <div class="form-input"></div>
 </template>
 
 <script>
@@ -24,8 +13,8 @@
 export default {
   name: "FormInput",
   props: {
-    type: required
-  }
+    type: required,
+  },
 };
 </script>
 

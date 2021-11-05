@@ -2,6 +2,16 @@
   <div class="add-good">
     <h3 class="title">Добавление товара</h3>
     <form class="add-good__form">
+      <label class="add-good__label add-good__label--name" for="name"
+        ><span class="dot"></span>Наименование товара</label
+      >
+      <input
+        class="add-good__input"
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Введите наименование товара"
+      />
       <label class="add-good__label" for="description">Описание товара</label>
       <textarea
         class="add-good__textarea"
@@ -10,16 +20,27 @@
         id="description"
         placeholder="Введите описание товара"
       ></textarea>
-      <label class="add-good__label add-good__label--required" for="name"
-        >Ссылка на изображение товара</label
+      <label class="add-good__label add-good__label--image" for="link"
+        ><span class="dot"></span>Ссылка на изображение товара</label
       >
       <input
         class="add-good__input"
         type="text"
         name="name"
-        id="name"
+        id="link"
         placeholder="Введите ссылку "
       />
+      <label class="add-good__label add-good__label--price" for="link"
+        ><span class="dot"></span>Цена товара</label
+      >
+      <input
+        class="add-good__input"
+        type="text"
+        name="name"
+        id="link"
+        placeholder="Введите цену"
+      />
+      <button class="add-good__button">Добавить товар</button>
     </form>
   </div>
 </template>
@@ -61,11 +82,32 @@ export default {
     color: #49485e;
     margin-bottom: 4px;
     position: relative;
-    &--required {
-      &:before {
+    &--name {
+      span {
         position: absolute;
         left: 96px;
-        content: "";
+        display: block;
+        width: 4px;
+        height: 4px;
+        background: #ff8484;
+        border-radius: 50%;
+      }
+    }
+    &--image {
+      span {
+        position: absolute;
+        left: 134px;
+        display: block;
+        width: 4px;
+        height: 4px;
+        background: #ff8484;
+        border-radius: 50%;
+      }
+    }
+    &--price {
+      span {
+        position: absolute;
+        left: 54px;
         display: block;
         width: 4px;
         height: 4px;
@@ -103,6 +145,18 @@ export default {
     min-width: 274px;
     min-height: 108px;
     margin-bottom: 16px;
+  }
+  &__button {
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #b4b4b4;
+    border: none;
+    padding: 11px 0;
   }
 }
 </style>
