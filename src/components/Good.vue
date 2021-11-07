@@ -8,10 +8,12 @@
       alt="Супер камера"
     />
     <div class="wrapper">
-      <h3 class="title">{{ good.title }}</h3>
-      <p class="description">
-        {{ good.description }}
-      </p>
+      <div class="cover">
+        <h3 class="title">{{ good.title }}</h3>
+        <p class="description">
+          {{ good.description }}
+        </p>
+      </div>
       <p class="price">{{ good.price | splitNumber }} <span>руб.</span></p>
     </div>
     <button class="delete" @click="deleteGood(good.id)"></button>
@@ -68,9 +70,11 @@ export default {
     }
   }
   .wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    height: 223px;
+    padding: 16px 16px 50px;
   }
   .image {
     border-top-left-radius: 4px;
@@ -95,11 +99,14 @@ export default {
     margin-top: 16px;
   }
   .price {
+    position: absolute;
+    bottom: -5px;
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 30px;
     color: #3f3f3f;
+    margin-top: auto;
   }
   .delete {
     display: block;

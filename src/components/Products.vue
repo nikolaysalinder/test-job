@@ -43,4 +43,9 @@ export default {
     margin-right: -16px;
   }
 }
+@media screen and (max-width: 768px) {
+  .container--flex {
+    flex-direction: column;
+  }
+}
 </style>

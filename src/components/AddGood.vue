@@ -2,16 +2,24 @@
   <div class="add-good">
     <h2 class="title">Добавление товара</h2>
     <form class="add-good__form">
-      <label class="add-good__label add-good__label--name" for="name"
-        ><span class="dot"></span>Наименование товара</label
-      >
-      <input
-        class="add-good__input"
-        type="text"
-        id="name"
-        placeholder="Введите наименование товара"
-        v-model="name"
-      />
+      <div class="wrapper">
+        <label class="add-good__label add-good__label--name" for="name"
+          ><span class="dot"></span>Наименование товара</label
+        >
+        <input
+          class="add-good__input"
+          :class="{ 'add-good__input--error': hasNameError }"
+          type="text"
+          id="name"
+          placeholder="Введите наименование товара"
+          v-model="name"
+          required
+          @input="validateInput"
+        />
+        <span class="add-good__error" :class="{ 'show-error': hasNameError }"
+          >Поле является обязательным</span
+        >
+      </div>
       <label class="add-good__label" for="description">Описание товара</label>
       <textarea
         class="add-good__textarea"
@@ -29,6 +37,7 @@
         id="link"
         placeholder="Введите ссылку"
         v-model="link"
+        required
       />
       <label class="add-good__label add-good__label--price" for="price"
         ><span class="dot"></span>Цена товара</label
@@ -39,11 +48,12 @@
         id="price"
         placeholder="Введите цену"
         v-model="price"
+        required
       />
       <button
         @click.prevent="addGood"
         class="add-good__button"
-        :disabled="false"
+        :disabled="true"
       >
         Добавить товар
       </button>
@@ -64,6 +74,7 @@ export default {
       description: "",
       link: "",
       price: "",
+      hasNameError: false,
     };
   },
   methods: {
@@ -77,6 +88,13 @@ export default {
       console.log(good);
       this.$store.commit("addGood", good);
     },
+    validateInput() {
+      if (this.name.length === 0) {
+        this.hasNameError = true;
+      } else {
+        this.hasNameError = false;
+      }
+    },
   },
 };
 </script>
@@ -85,11 +103,32 @@ export default {
 .add-good {
   outline: 1px solid green;
   margin-right: 16px;
+  .wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 16px;
+  }
   .title {
     margin-top: 0;
     margin-bottom: 0;
     font-size: 28px;
     color: #3f3f3f;
+  }
+  &__error {
+    position: absolute;
+    bottom: 3px;
+    display: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 8px;
+    line-height: 10px;
+    letter-spacing: -0.02em;
+    color: #ff8484;
+    margin-top: 4px;
+  }
+  .show-error {
+    display: block;
   }
   &__form {
     display: flex;
@@ -151,9 +190,12 @@ export default {
     color: #3f3f3f;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    border: none;
+    border: 1px solid #ffffff;
     padding: 10px 16px 11px;
-    margin-bottom: 16px;
+    outline: none;
+    &--error {
+      border: 1px solid #ff8484;
+    }
   }
   &__textarea {
     padding: 10px 16px;
@@ -179,13 +221,10 @@ export default {
     line-height: 15px;
     text-align: center;
     letter-spacing: -0.02em;
-    color: #b4b4b4;
     border: none;
     padding: 11px 0;
-    background: #eeeeee;
-    border-radius: 10px;
     background: #7bae73;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     color: #ffffff;
     &:disabled {
