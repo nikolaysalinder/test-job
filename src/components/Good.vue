@@ -57,6 +57,7 @@ export default {
 .good {
   position: relative;
   width: 332px;
+  min-width: 332px;
   height: 423px;
   margin-right: 16px;
   background: #fffefb;

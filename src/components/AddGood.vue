@@ -14,7 +14,7 @@
           placeholder="Введите наименование товара"
           v-model="name"
           required
-          @input="validateInput"
+          @input="validateInputName"
         />
         <span class="add-good__error" :class="{ 'show-error': hasNameError }"
           >Поле является обязательным</span
@@ -28,32 +28,46 @@
         placeholder="Введите описание товара"
         v-model="description"
       ></textarea>
-      <label class="add-good__label add-good__label--image" for="link"
-        ><span class="dot"></span>Ссылка на изображение товара</label
-      >
-      <input
-        class="add-good__input"
-        type="text"
-        id="link"
-        placeholder="Введите ссылку"
-        v-model="link"
-        required
-      />
+      <div class="wrapper">
+        <label class="add-good__label add-good__label--image" for="link"
+          ><span class="dot"></span>Ссылка на изображение товара</label
+        >
+        <input
+          class="add-good__input"
+          :class="{ 'add-good__input--error': hasLinkError }"
+          type="text"
+          id="link"
+          placeholder="Введите ссылку"
+          v-model="link"
+          required
+          @input="validateInputLink"
+        />
+        <span class="add-good__error" :class="{ 'show-error': hasLinkError }"
+          >Поле является обязательным</span
+        >
+      </div>
       <label class="add-good__label add-good__label--price" for="price"
         ><span class="dot"></span>Цена товара</label
       >
-      <input
-        class="add-good__input"
-        type="text"
-        id="price"
-        placeholder="Введите цену"
-        v-model="price"
-        required
-      />
+      <div class="wrapper">
+        <input
+          class="add-good__input"
+          :class="{ 'add-good__input--error': hasPriceError }"
+          type="text"
+          id="price"
+          placeholder="Введите цену"
+          v-model="price"
+          required
+          @input="validateInputPrice"
+        />
+        <span class="add-good__error" :class="{ 'show-error': hasPriceError }"
+          >Поле является обязательным</span
+        >
+      </div>
       <button
         @click.prevent="addGood"
         class="add-good__button"
-        :disabled="true"
+        :disabled="!isButtonEnabled"
       >
         Добавить товар
       </button>
@@ -75,6 +89,9 @@ export default {
       link: "",
       price: "",
       hasNameError: false,
+      hasLinkError: false,
+      hasPriceError: false,
+      firstInput: false,
     };
   },
   methods: {
@@ -88,12 +105,41 @@ export default {
       console.log(good);
       this.$store.commit("addGood", good);
     },
-    validateInput() {
+    validateInputName() {
+      this.firstInput = true;
       if (this.name.length === 0) {
         this.hasNameError = true;
       } else {
         this.hasNameError = false;
       }
+    },
+    validateInputLink() {
+      this.firstInput = true;
+      if (this.link.length === 0) {
+        this.hasLinkError = true;
+      } else {
+        this.hasLinkError = false;
+      }
+    },
+    validateInputPrice() {
+      this.firstInput = true;
+      if (this.price.length === 0) {
+        this.hasPriceError = true;
+      } else {
+        this.hasPriceError = false;
+      }
+    },
+  },
+  computed: {
+    isButtonEnabled() {
+      if (
+        this.name.length > 0 &&
+        this.link.length > 0 &&
+        this.price.length > 0
+      ) {
+        return true;
+      }
+      return false;
     },
   },
 };
@@ -103,6 +149,7 @@ export default {
 .add-good {
   outline: 1px solid green;
   margin-right: 16px;
+  margin-bottom: 16px;
   .wrapper {
     position: relative;
     display: flex;
