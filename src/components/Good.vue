@@ -1,12 +1,6 @@
 <template>
   <div class="good">
-    <img
-      width="332"
-      height="200"
-      class="image"
-      :src="image"
-      alt="Супер камера"
-    />
+    <img width="332" height="200" class="image" :src="image" :alt="good.name" />
     <div class="wrapper">
       <div class="cover">
         <h3 class="title">{{ good.title }}</h3>

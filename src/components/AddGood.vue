@@ -102,11 +102,9 @@ export default {
         link: this.link,
         price: this.price,
       };
-      console.log(good);
       this.$store.commit("addGood", good);
     },
     validateInputName() {
-      this.firstInput = true;
       if (this.name.length === 0) {
         this.hasNameError = true;
       } else {
@@ -114,7 +112,6 @@ export default {
       }
     },
     validateInputLink() {
-      this.firstInput = true;
       if (this.link.length === 0) {
         this.hasLinkError = true;
       } else {
@@ -122,7 +119,6 @@ export default {
       }
     },
     validateInputPrice() {
-      this.firstInput = true;
       if (this.price.length === 0) {
         this.hasPriceError = true;
       } else {
