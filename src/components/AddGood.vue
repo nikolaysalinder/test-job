@@ -1,6 +1,6 @@
 <template>
   <div class="add-good">
-    <h3 class="title">Добавление товара</h3>
+    <h2 class="title">Добавление товара</h2>
     <form class="add-good__form">
       <label class="add-good__label add-good__label--name" for="name"
         ><span class="dot"></span>Наименование товара</label
@@ -8,17 +8,17 @@
       <input
         class="add-good__input"
         type="text"
-        name="name"
         id="name"
         placeholder="Введите наименование товара"
+        v-model="name"
       />
       <label class="add-good__label" for="description">Описание товара</label>
       <textarea
         class="add-good__textarea"
         type="textarea"
-        name="name"
         id="description"
         placeholder="Введите описание товара"
+        v-model="description"
       ></textarea>
       <label class="add-good__label add-good__label--image" for="link"
         ><span class="dot"></span>Ссылка на изображение товара</label
@@ -26,21 +26,27 @@
       <input
         class="add-good__input"
         type="text"
-        name="name"
         id="link"
-        placeholder="Введите ссылку "
+        placeholder="Введите ссылку"
+        v-model="link"
       />
-      <label class="add-good__label add-good__label--price" for="link"
+      <label class="add-good__label add-good__label--price" for="price"
         ><span class="dot"></span>Цена товара</label
       >
       <input
         class="add-good__input"
         type="text"
-        name="name"
-        id="link"
+        id="price"
         placeholder="Введите цену"
+        v-model="price"
       />
-      <button class="add-good__button">Добавить товар</button>
+      <button
+        @click.prevent="addGood"
+        class="add-good__button"
+        :disabled="false"
+      >
+        Добавить товар
+      </button>
     </form>
   </div>
 </template>
@@ -51,13 +57,34 @@
  * @desc компонет для добавления товара.
  */
 export default {
-  name: "Add-Goods",
+  name: "AddGood",
+  data() {
+    return {
+      name: "",
+      description: "",
+      link: "",
+      price: "",
+    };
+  },
+  methods: {
+    addGood() {
+      const good = {
+        name: this.name,
+        description: this.description,
+        link: this.link,
+        price: this.price,
+      };
+      console.log(good);
+      this.$store.commit("addGood", good);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .add-good {
   outline: 1px solid green;
+  margin-right: 16px;
   .title {
     margin-top: 0;
     margin-bottom: 0;
@@ -117,7 +144,6 @@ export default {
     }
   }
   &__input {
-    font-family: Source Sans Pro;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
@@ -131,7 +157,6 @@ export default {
   }
   &__textarea {
     padding: 10px 16px;
-    font-family: Source Sans Pro;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
@@ -157,6 +182,21 @@ export default {
     color: #b4b4b4;
     border: none;
     padding: 11px 0;
+    background: #eeeeee;
+    border-radius: 10px;
+    background: #7bae73;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    &:disabled {
+      background: #eeeeee;
+      color: #b4b4b4;
+    }
+
+    &[disabled] {
+      background: #eeeeee;
+      color: #b4b4b4;
+    }
   }
 }
 </style>
