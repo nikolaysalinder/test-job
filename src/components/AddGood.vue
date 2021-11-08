@@ -148,7 +148,6 @@ export default {
 
 <style lang="scss" scoped>
 .add-good {
-  outline: 1px solid green;
   margin-right: 16px;
   margin-bottom: 16px;
   .wrapper {

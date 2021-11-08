@@ -41,7 +41,6 @@ export default {
   max-width: 1407px;
   padding: 0 15px;
   margin: 0 auto;
-  outline: 1px solid green;
   &--flex {
     display: flex;
   }
@@ -56,7 +55,6 @@ export default {
     justify-content: flex-end;
     width: 100%;
     mim-height: 40px;
-    outline: 1px solid red;
   }
   .wrapper {
     display: flex;

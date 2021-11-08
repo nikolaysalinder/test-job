@@ -49,5 +49,8 @@ export default {
 .select {
   width: 332px;
   padding-right: 16px;
+  .multiselect__tags {
+    min-height: 33px;
+  }
 }
 </style>
