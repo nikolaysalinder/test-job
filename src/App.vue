@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view />
   </div>
 </template>
@@ -15,6 +11,7 @@
 #app {
   font-family: "Source Sans Pro", sans-serif;
   color: #3f3f3f;
+  margin-top: 16px;
 }
 
 #nav {
