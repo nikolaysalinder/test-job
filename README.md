@@ -1,14 +1,21 @@
 # test-job
 
-## Project setup
+## Cкачать проект 
+
 ```
-yarn install
+git clone git@github.com:nikolaysalinder/test-job.git
 ```
 
-### Compiles and hot-reloads for development
+## Установить зависимости
+```
+yarn install или npm install
+```
+
+### Скомпилировароть проект с возможностью hot-reload
 ```
 yarn serve
 ```
+### Перейти по адресам, написанным в консоли
 
 ### Compiles and minifies for production
 ```
