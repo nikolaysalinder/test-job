@@ -1,46 +1,76 @@
 <template>
   <div class="add-good">
-    <h3 class="title">Добавление товара</h3>
+    <h2 class="title">Добавление товара</h2>
     <form class="add-good__form">
-      <label class="add-good__label add-good__label--name" for="name"
-        ><span class="dot"></span>Наименование товара</label
-      >
-      <input
-        class="add-good__input"
-        type="text"
-        name="name"
-        id="name"
-        placeholder="Введите наименование товара"
-      />
+      <div class="wrapper">
+        <label class="add-good__label add-good__label--name" for="name"
+          ><span class="dot"></span>Наименование товара</label
+        >
+        <input
+          class="add-good__input"
+          :class="{ 'add-good__input--error': hasTitleError }"
+          type="text"
+          id="name"
+          placeholder="Введите наименование товара"
+          v-model="title"
+          required
+          @input="validateInputTitle"
+        />
+        <span class="add-good__error" :class="{ 'show-error': hasTitleError }"
+          >Поле является обязательным</span
+        >
+      </div>
       <label class="add-good__label" for="description">Описание товара</label>
       <textarea
         class="add-good__textarea"
         type="textarea"
-        name="name"
         id="description"
         placeholder="Введите описание товара"
+        v-model="description"
       ></textarea>
-      <label class="add-good__label add-good__label--image" for="link"
-        ><span class="dot"></span>Ссылка на изображение товара</label
-      >
-      <input
-        class="add-good__input"
-        type="text"
-        name="name"
-        id="link"
-        placeholder="Введите ссылку "
-      />
-      <label class="add-good__label add-good__label--price" for="link"
+      <div class="wrapper">
+        <label class="add-good__label add-good__label--image" for="link"
+          ><span class="dot"></span>Ссылка на изображение товара</label
+        >
+        <input
+          class="add-good__input"
+          :class="{ 'add-good__input--error': hasLinkError }"
+          type="text"
+          id="link"
+          placeholder="Введите ссылку"
+          v-model="link"
+          required
+          @input="validateInputLink"
+        />
+        <span class="add-good__error" :class="{ 'show-error': hasLinkError }"
+          >Поле является обязательным</span
+        >
+      </div>
+      <label class="add-good__label add-good__label--price" for="price"
         ><span class="dot"></span>Цена товара</label
       >
-      <input
-        class="add-good__input"
-        type="text"
-        name="name"
-        id="link"
-        placeholder="Введите цену"
-      />
-      <button class="add-good__button">Добавить товар</button>
+      <div class="wrapper">
+        <input
+          class="add-good__input"
+          :class="{ 'add-good__input--error': hasPriceError }"
+          type="text"
+          id="price"
+          placeholder="Введите цену"
+          v-model="price"
+          required
+          @input="validateInputPrice"
+        />
+        <span class="add-good__error" :class="{ 'show-error': hasPriceError }"
+          >Поле является обязательным</span
+        >
+      </div>
+      <button
+        @click.prevent="addGood"
+        class="add-good__button"
+        :disabled="!isButtonEnabled"
+      >
+        Добавить товар
+      </button>
     </form>
   </div>
 </template>
@@ -51,18 +81,102 @@
  * @desc компонет для добавления товара.
  */
 export default {
-  name: "Add-Goods",
+  name: "AddGood",
+  data() {
+    return {
+      title: "",
+      description: "",
+      link: "",
+      price: "",
+      hasTitleError: false,
+      hasLinkError: false,
+      hasPriceError: false,
+    };
+  },
+  methods: {
+    addGood() {
+      const good = {
+        id: "_" + Math.random().toString(36).substr(2, 9),
+        title: this.title,
+        description: this.description,
+        link: this.link,
+        price: this.price,
+      };
+      this.$store.commit("addGood", good);
+      this.$store.commit("saveGoodsToLocalStorage");
+      this.title = "";
+      this.description = "";
+      this.link = "";
+      this.price = "";
+    },
+    validateInputTitle() {
+      if (this.title.length === 0) {
+        this.hasTitleError = true;
+      } else {
+        this.hasTitleError = false;
+      }
+    },
+    validateInputLink() {
+      if (this.link.length === 0) {
+        this.hasLinkError = true;
+      } else {
+        this.hasLinkError = false;
+      }
+    },
+    validateInputPrice() {
+      if (this.price.length === 0) {
+        this.hasPriceError = true;
+      } else {
+        this.hasPriceError = false;
+      }
+    },
+  },
+  computed: {
+    isButtonEnabled() {
+      if (
+        this.title.length > 0 &&
+        this.link.length > 0 &&
+        this.price.length > 0
+      ) {
+        return true;
+      }
+      return false;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .add-good {
   outline: 1px solid green;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  .wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 16px;
+  }
   .title {
     margin-top: 0;
     margin-bottom: 0;
     font-size: 28px;
     color: #3f3f3f;
+  }
+  &__error {
+    position: absolute;
+    bottom: 3px;
+    display: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 8px;
+    line-height: 10px;
+    letter-spacing: -0.02em;
+    color: #ff8484;
+    margin-top: 4px;
+  }
+  .show-error {
+    display: block;
   }
   &__form {
     display: flex;
@@ -117,7 +231,6 @@ export default {
     }
   }
   &__input {
-    font-family: Source Sans Pro;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
@@ -125,13 +238,15 @@ export default {
     color: #3f3f3f;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    border: none;
+    border: 1px solid #ffffff;
     padding: 10px 16px 11px;
-    margin-bottom: 16px;
+    outline: none;
+    &--error {
+      border: 1px solid #ff8484;
+    }
   }
   &__textarea {
     padding: 10px 16px;
-    font-family: Source Sans Pro;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
@@ -154,9 +269,26 @@ export default {
     line-height: 15px;
     text-align: center;
     letter-spacing: -0.02em;
-    color: #b4b4b4;
     border: none;
     padding: 11px 0;
+    background: #7bae73;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    transition: background 0.3s;
+    &:hover {
+      background: #73a46c;
+      cursor: pointer;
+    }
+    &:disabled {
+      background: #eeeeee;
+      color: #b4b4b4;
+    }
+
+    &[disabled] {
+      background: #eeeeee;
+      color: #b4b4b4;
+    }
   }
 }
 </style>
