@@ -3,6 +3,7 @@
     <div class="container container--flex">
       <AddGood></AddGood>
       <div class="goods">
+        <div class="sorting"></div>
         <Good v-for="(good, index) in goods" :good="good" :key="index"></Good>
       </div>
     </div>
@@ -14,12 +15,16 @@ import AddGood from "@/components/AddGood.vue";
 import Good from "@/components/Good.vue";
 export default {
   name: "Products",
+  data() {
+    return {};
+  },
   components: {
     AddGood,
     Good,
   },
   computed: {
     goods() {
+      this.$store.commit("setGoodFromLocalStorage");
       return this.$store.state.goods;
     },
   },
@@ -41,6 +46,20 @@ export default {
     flex-wrap: wrap;
     justify-content: space-around;
     margin-right: -16px;
+  }
+  .sorting {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 36px;
+    outline: 1px solid red;
+  }
+  .wrapper {
+    display: flex;
+    width: 121px;
+  }
+  .select {
+    width: 121px;
   }
 }
 @media screen and (max-width: 768px) {

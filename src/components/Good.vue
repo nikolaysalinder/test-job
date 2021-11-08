@@ -37,6 +37,8 @@ export default {
   methods: {
     deleteGood(id) {
       this.$store.commit("deleteGood", id);
+      this.$store.commit("saveGoodsToLocalStorage");
+      this.$store.commit("setGoodFromLocalStorage");
     },
   },
   computed: {

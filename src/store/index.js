@@ -55,6 +55,14 @@ export default new Vuex.Store({
     addGood(state, good) {
       state.goods.push(good);
     },
+    saveGoodsToLocalStorage(state) {
+      console.log(state.goods);
+      localStorage.setItem("goods", JSON.stringify(state.goods));
+    },
+    setGoodFromLocalStorage(state) {
+      state.goods = JSON.parse(localStorage.getItem("goods"));
+      console.log(state.goods);
+    },
   },
   actions: {},
   modules: {},

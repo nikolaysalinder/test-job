@@ -91,7 +91,6 @@ export default {
       hasNameError: false,
       hasLinkError: false,
       hasPriceError: false,
-      firstInput: false,
     };
   },
   methods: {
@@ -103,6 +102,8 @@ export default {
         price: this.price,
       };
       this.$store.commit("addGood", good);
+      this.$store.commit("saveGoodsToLocalStorage");
+      this.$store.commit("setGoodFromLocalStorage");
     },
     validateInputName() {
       if (this.name.length === 0) {
@@ -270,6 +271,11 @@ export default {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     color: #ffffff;
+    transition: background 0.3s;
+    &:hover {
+      background: #73a46c;
+      cursor: pointer;
+    }
     &:disabled {
       background: #eeeeee;
       color: #b4b4b4;
