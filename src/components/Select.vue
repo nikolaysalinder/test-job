@@ -9,7 +9,6 @@
       placeholder="По умолчанию"
       @select="sortGoods"
     ></multiselect>
-    <pre class="language-json"><code>{{ value  }}</code></pre>
   </div>
 </template>
 
