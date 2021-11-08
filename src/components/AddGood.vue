@@ -8,15 +8,15 @@
         >
         <input
           class="add-good__input"
-          :class="{ 'add-good__input--error': hasNameError }"
+          :class="{ 'add-good__input--error': hasTitleError }"
           type="text"
           id="name"
           placeholder="Введите наименование товара"
-          v-model="name"
+          v-model="title"
           required
-          @input="validateInputName"
+          @input="validateInputTitle"
         />
-        <span class="add-good__error" :class="{ 'show-error': hasNameError }"
+        <span class="add-good__error" :class="{ 'show-error': hasTitleError }"
           >Поле является обязательным</span
         >
       </div>
@@ -84,11 +84,11 @@ export default {
   name: "AddGood",
   data() {
     return {
-      name: "",
+      title: "",
       description: "",
       link: "",
       price: "",
-      hasNameError: false,
+      hasTitleError: false,
       hasLinkError: false,
       hasPriceError: false,
     };
@@ -96,20 +96,24 @@ export default {
   methods: {
     addGood() {
       const good = {
-        name: this.name,
+        id: "_" + Math.random().toString(36).substr(2, 9),
+        title: this.title,
         description: this.description,
         link: this.link,
         price: this.price,
       };
       this.$store.commit("addGood", good);
       this.$store.commit("saveGoodsToLocalStorage");
-      this.$store.commit("setGoodFromLocalStorage");
+      this.title = "";
+      this.description = "";
+      this.link = "";
+      this.price = "";
     },
-    validateInputName() {
-      if (this.name.length === 0) {
-        this.hasNameError = true;
+    validateInputTitle() {
+      if (this.title.length === 0) {
+        this.hasTitleError = true;
       } else {
-        this.hasNameError = false;
+        this.hasTitleError = false;
       }
     },
     validateInputLink() {
@@ -130,7 +134,7 @@ export default {
   computed: {
     isButtonEnabled() {
       if (
-        this.name.length > 0 &&
+        this.title.length > 0 &&
         this.link.length > 0 &&
         this.price.length > 0
       ) {

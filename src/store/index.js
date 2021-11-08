@@ -63,6 +63,23 @@ export default new Vuex.Store({
       state.goods = JSON.parse(localStorage.getItem("goods"));
       console.log(state.goods);
     },
+    sortGoods(state, sortOrder) {
+      if (sortOrder === "По цене min (от меньшего к большему)") {
+        state.goods = state.goods.sort((a, b) => {
+          return a.price - b.price;
+        });
+      } else if (sortOrder === "По цене max (от большего к меньшему)") {
+        state.goods = state.goods.sort((a, b) => {
+          return b.price - a.price;
+        });
+      } else if (sortOrder === "По наименованию") {
+        state.goods = state.goods.sort((a, b) => {
+          if (a.title < b.title) return -1;
+          if (b.title > a.title) return 1;
+          return 0;
+        });
+      }
+    },
   },
   actions: {},
   modules: {},
