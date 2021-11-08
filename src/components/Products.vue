@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     goods() {
-      // this.$store.commit("setGoodFromLocalStorage");
+      this.$store.commit("setGoodFromLocalStorage");
       return this.$store.state.goods;
     },
   },
